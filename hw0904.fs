@@ -30,15 +30,21 @@ let rec merge L1 L2 =
   let rec _merge L1 L2 L3 =
       match L1, L2 with
       | [], [] -> //printfn "---L3>%A<L3---" L3
-                  L3
+                  List.rev L3
       | [], _  -> //printfn "---Right>%A<Right---" L2
-                  L3 @ L2
+                  //let leftM2 = 
+                  (List.rev L3) @ L2
+                  //printfn "---leftM2>%A<leftM2---" leftM2
+                  //leftM2
       | _,  [] -> //printfn "---Left>%A<Left---" L1
-                  L3 @ L1
+                  //let leftM1 = 
+                  (List.rev L3) @ L1
+                  //printfn "---leftM1>%A<leftM1---" leftM1
+                  //leftM1
       | hd1::tl1, hd2::tl2 when hd1 <= hd2 -> //printfn "---hd1>%A<hd1---" hd1
-                                              _merge tl1 L2 (L3 @ [hd1])
+                                              _merge tl1 L2 (hd1 :: L3)
       | hd1::tl1, hd2::tl2                 -> //printfn "---hd2>%A<hd2---" hd2
-                                              _merge L1 tl2 (L3 @ [hd2])
+                                              _merge L1 tl2 (hd2 :: L3)
   //let merged = 
   _merge L1 L2 []
   //printfn "---Merged>%A<Merged---" merged
