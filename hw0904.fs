@@ -24,31 +24,17 @@ let splitAt n L =
   splitUtil n L []
 
 let rec merge L1 L2 =
-  //printfn "---ML1>%A<ML1---" L1
-  //printfn "---ML2>%A<ML2---" L2
-
   let rec _merge L1 L2 L3 =
       match L1, L2 with
-      | [], [] -> //printfn "---L3>%A<L3---" L3
-                  List.rev L3
-      | [], _  -> //printfn "---Right>%A<Right---" L2
-                  //let leftM2 = 
-                  (List.rev L3) @ L2
-                  //printfn "---leftM2>%A<leftM2---" leftM2
-                  //leftM2
-      | _,  [] -> //printfn "---Left>%A<Left---" L1
-                  //let leftM1 = 
-                  (List.rev L3) @ L1
-                  //printfn "---leftM1>%A<leftM1---" leftM1
-                  //leftM1
-      | hd1::tl1, hd2::tl2 when hd1 <= hd2 -> //printfn "---hd1>%A<hd1---" hd1
-                                              _merge tl1 L2 (hd1 :: L3)
-      | hd1::tl1, hd2::tl2                 -> //printfn "---hd2>%A<hd2---" hd2
-                                              _merge L1 tl2 (hd2 :: L3)
-  //let merged = 
+      | [], [] -> List.rev L3
+      | [], _  -> (List.rev L3) @ L2
+                  
+      | _,  [] -> (List.rev L3) @ L1
+      | hd1::tl1, hd2::tl2 when hd1 <= hd2 -> _merge tl1 L2 (hd1 :: L3)
+      | hd1::tl1, hd2::tl2                 -> _merge L1 tl2 (hd2 :: L3) 
+      
   _merge L1 L2 []
-  //printfn "---Merged>%A<Merged---" merged
-  //merged
+
 
 
 let rec mergesort L = 
@@ -58,7 +44,5 @@ let rec mergesort L =
   | e1::e2::[] -> if e1<=e2 then [e1;e2] else [e2;e1]
   | _          -> let mid = List.length L / 2
                   let (L1, L2) = splitAt mid L
-                  //printfn "--L1>%A<L1--" L1
-                  //printfn "--L2>%A<L2--" L2
                   merge (mergesort L1) (mergesort L2)
                   
